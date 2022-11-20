@@ -34,7 +34,7 @@ spec:
 
             - name: ALLOWED_HOSTS
               value: "*,"
-
+                    
             - name: ADMIN_UNAME
               valueFrom:
                 secretKeyRef:
@@ -46,6 +46,12 @@ spec:
                 secretKeyRef:
                     name: admin-login-secrets
                     key: password
+                    
+            - name: secret-key
+              valueFrom:
+                secretKeyRef:
+                    name: admin-login-secrets
+                    key: secret-key
 
           volumeMounts:
             - name: mysql-volume-mount

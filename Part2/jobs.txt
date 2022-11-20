@@ -1,0 +1,33 @@
+In order to create the migrations_job.yaml file in part2 of the directory, I copied the code from the /GiftcardSite/k8/django-deploy.yaml. Then I added the following line on line 13: 
+
+"command: ["python3", "manage.py", "migrate"]"
+
+As discussed in Kevin's office hours and also used in Assignment 2, this command is basically used to run and perform the database migration. Everything else in the .yaml file are parameters/varaibles used to access the database which is why I haven't made any changes to any other lines of code. 
+
+Following are the commands used to test and validate this part of the assignment - 
+
+minikube delete
+(restarted my VM)
+minikube start
+eval $(minikube docker-env)
+docker build -t nyuappsec/assign3:v0 .
+docker build -t nyuappsec/assign3-proxy:v0 proxy/
+docker build -t nyuappsec/assign3-db:v0 db/
+kubectl apply -f db/k8
+kubectl apply -f GiftcardSite/k8
+kubectl apply -f proxy/k8
+kubectl apply -f GiftcardSite/k8/securing-secrets-part1.yaml
+kubectl apply -f db/k8/db-deployment.yaml
+kubectl apply -f db/k8s/db-deployment.yaml
+kubectl apply -f GiftcardSite/k8/django-deploy.yaml
+kubectl apply -f Part2/migrations_job.yaml
+
+kubectl get pods
+kubectl get service
+minikube service proxy-service
+kubectl get pods --> Saw the 'NAME' - migrationjob
+
+
+
+
+

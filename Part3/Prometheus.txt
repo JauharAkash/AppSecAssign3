@@ -1,0 +1,30 @@
+Part 3: Monitoring with Prometheus
+
+Part 3.1: Remove unwanted monitoring.
+
+In the GiftcardSite/LegacySite/views.py file I noticed that there were a lot of exposed secrets. The comment on line 50 helped me identify a monitoring feature which was coded in the views.py. The counter of how many times a password is utilized is certainly something that should never be collected or kept track of. I commented lines 51 - 54 to stop this monitoring as it will not impact any other capabilities. Will make it more secure and less vulnerable. 
+
+
+
+Part 3.2: Expand reasonable monitoring.
+
+There are things we may want to monitor using Prometheus. In this part of the assignment you should add a Prometheus counter that counts all of the times we purposely return a 404 message in views.py. These lines are caused by Database errors, so you should name this counter database_error_return_404.
+
+As mentioned in the assignment instruction, I created/added a Prometheus counter that counts all of the times a 404 error message gets returned in views.py. On line 20, I created a key called database_error_return_404 to counter the 404 error and then wherever error 404 was used/returned I added the database_error_return_404 counter.
+
+"graphs['database_error_return_404'] = Counter('database_error_return_404', 'The total number'\
+  + ' of database error return 404.')"
+
+
+ On lines 106, 112, 158, 164, 177, I have added the following line - 'graphs['database_error_return_404'].inc()'. This was done to iterate and loop the counter. 
+ 
+ 
+ 
+ Part 3.3: Add Prometheus
+ 
+ 
+ 
+ 
+
+
+

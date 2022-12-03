@@ -30,4 +30,15 @@ kubectl get pods --> Saw the 'NAME' - migrationjob
 
 
 
+Then, to sart the seeding part of the assignment, I created the database_seeding_job.yaml file (Part2/database_seeding_job.yaml). The shell command on line 13 helped in the seeding and line number 14 passed the paramater to make the connection. Then, I created a file called seed.sql (db/seed.sql) to load the data for the job. I also created a new image for this part of this lab.
+
+Following are the commands used to test and validate this part of the assignment - 
+
+docker build -t nyuappsec/assign3_part2_seeding:v0 .
+docker build -t nyuappsec/assign3_part2_seeding-proxy:v0 proxy/
+docker build -t nyuappsec/assign3_part2_seeding-db:v0 db/
+kubectl apply -f Part2/database_seeding_job.yaml
+kubectl get pods
+kubectl get service
+minikube service proxy-service
 

@@ -1,28 +1,21 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: assignment3-django-deploy
+apiVersion: batch/v1
+kind: Job 
+metadata: 
+  name: dbseeding
   labels:
-    app: assignment3-django-deploy
+    app: assignment3-migrations_job
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      pod: assignment3-django-deploy
-  template:
-    metadata:
-      labels:
-        pod: assignment3-django-deploy
-    spec:
+   template:
+     spec:
       containers:
-        - name: assignment3-django-deploy
-          image: nyuappsec/assign3:v0
-          ports:
-            - containerPort: 8000
+        - name: dbseeding
+          image: nyuappsec/assign3_part2_seeding:v0
+          command: ["/bin/sh"]
+          args: ["-c", "mysql --user=root --password=${MYSQL_ROOT_PASSWORD} --database=${MYSQL_DB} --host=mysql-service -f < /docker-entrypoint-initdb.d/seed.sql"]
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
-              	secretKeyRef:
+               secretKeyRef:
                    name: securing-secrets-part1
                    key: MYSQL_ROOT_PASSWORD
 
@@ -52,19 +45,4 @@ spec:
                 secretKeyRef:
                     name: admin-login-secrets
                     key: secret-key
-
-          volumeMounts:
-            - name: mysql-volume-mount
-              mountPath: /var/lib/busybox
-
-            - name: static-data-volume-mount
-              mountPath: /vol/static
-
-      volumes:
-        - name: mysql-volume-mount
-          persistentVolumeClaim:
-            claimName: mysql-pvc
-
-        - name: static-data-volume-mount
-          persistentVolumeClaim:
-            claimName: static-data-pvc
+      restartPolicy: Never

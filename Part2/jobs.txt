@@ -41,4 +41,3 @@ kubectl apply -f Part2/database_seeding_job.yaml
 kubectl get pods
 kubectl get service
 minikube service proxy-service
-

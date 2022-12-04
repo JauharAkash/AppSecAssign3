@@ -45,7 +45,9 @@ helm install prom-release prometheus-community/prometheus
 helm install prometheus-community/prometheus --generate-name
 
 
+ Then, to verify which configmaps are available I used the 'kubectl get configmap' command. Used the 'kubectl edit configmap prom-release-prometheus-server' to edit the configuration. Added the following on line 27 - "- proxy-service:8080". 
  
+ Outputted all the yaml files 
  
  
 

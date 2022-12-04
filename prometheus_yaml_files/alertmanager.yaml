@@ -1,0 +1,29 @@
+apiVersion: v1
+data:
+  alertmanager.yml: |
+    global: {}
+    receivers:
+    - name: default-receiver
+    route:
+      group_interval: 5m
+      group_wait: 10s
+      receiver: default-receiver
+      repeat_interval: 3h
+    templates:
+    - /etc/alertmanager/*.tmpl
+kind: ConfigMap
+metadata:
+  annotations:
+    meta.helm.sh/release-name: prom-release
+    meta.helm.sh/release-namespace: default
+  creationTimestamp: "2022-12-04T15:54:44Z"
+  labels:
+    app.kubernetes.io/instance: prom-release
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: alertmanager
+    app.kubernetes.io/version: v0.24.0
+    helm.sh/chart: alertmanager-0.22.0
+  name: prom-release-alertmanager
+  namespace: default
+  resourceVersion: "95249"
+  uid: 1244565b-9c1e-4b6a-a7a4-b16559304742

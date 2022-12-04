@@ -23,8 +23,38 @@ As mentioned in the assignment instruction, I created/added a Prometheus counter
  Part 3.3: Add Prometheus
  
  
+ After looking at the hints in the assignment instructions, I installed helm and Prometheus. Following are the commands I used ('https://helm.sh/docs/intro/install/' and 'https://artifacthub.io/packages/helm/prometheus-community/prometheus'):
+ 
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+helm repo add stable https://charts.helm.sh/stable
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm search repo prometheus-community
+helm install --generate-name stable/prometheus-operator  --> This command didn't work for me. I got the following error - 
+
+(WARNING: This chart is deprecated
+Error: INSTALLATION FAILED: failed to install CRD crds/crd-alertmanager.yaml: resource mapping not found for name: "alertmanagers.monitoring.coreos.com" namespace: "" from "": no matches for kind "CustomResourceDefinition" in version "apiextensions.k8s.io/v1beta1"
+ensure CRDs are installed first)
+
+
+Then, I used the following 2 commands after googling for hours - 
+
+helm install prom-release prometheus-community/prometheus
+helm install prometheus-community/prometheus --generate-name
+
+
  
  
+ 
+
+
+
+
+
+
+
 
 
 
